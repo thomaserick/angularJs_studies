@@ -3,7 +3,7 @@ Estudos com AngularJs
 
 ##Estrutura de Projeto
 
-
+```
 app/                    -> arquivos da aplicação  
     css/                -> arquivos css  
         app.css         -> default stylesheet  
@@ -23,6 +23,7 @@ app/                    -> arquivos da aplicação
         parking.html    -> parking view  
         car.html        -> car view  
     index.html          -> principal arquivo html 
+    ```
     
     
   ## Projetos
