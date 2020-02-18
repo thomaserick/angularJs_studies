@@ -1,2 +1,2 @@
-# angularJs_studies
+# Angular Js
 Estudos com AngularJs
