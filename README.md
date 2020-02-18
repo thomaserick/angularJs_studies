@@ -1,4 +1,4 @@
-# Angular Js
+# Angular Js 1.x
 Estudos com AngularJs
 
 ## Estrutura de Diretórios
