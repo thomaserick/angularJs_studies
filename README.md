@@ -1,7 +1,7 @@
 # Angular Js
 Estudos com AngularJs
 
-##Estrutura de Projeto
+## Estrutura de Diretórios
 
 ```
 app/                    -> arquivos da aplicação  
@@ -23,7 +23,7 @@ app/                    -> arquivos da aplicação
         parking.html    -> parking view  
         car.html        -> car view  
     index.html          -> principal arquivo html 
-    ```
+```
     
     
   ## Projetos
