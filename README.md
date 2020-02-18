@@ -3,6 +3,7 @@ Estudos com AngularJs
 
 ##Estrutura de Projeto
 
+
 app/                    -> arquivos da aplicação  
     css/                -> arquivos css  
         app.css         -> default stylesheet  
