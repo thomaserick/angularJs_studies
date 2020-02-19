@@ -36,21 +36,21 @@ app.controller("ProdutosController", function($scope, ProdutosService) {
 });
 
 app.service("ProdutosService", function($http) {
-  let api = "http://localhost:3000/produtos";
+  let baseUrl = "http://localhost:3000/produtos";
 
   this.list = function() {
-    return $http.get(api);
+    return $http.get(baseUrl);
   };
 
   this.save = function(produto) {
     if (produto.id) {
-      return $http.put(api + "/" + produto.id, produto);
+      return $http.put(baseUrl + "/" + produto.id, produto);
     } else {
-      return $http.post(api, produto);
+      return $http.post(baseUrl, produto);
     }
   };
 
   this.delete = function(produto) {
-    return $http.delete(api + "/" + produto.id);
+    return $http.delete(baseUrl + "/" + produto.id);
   };
 });
