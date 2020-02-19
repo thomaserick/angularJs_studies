@@ -9,16 +9,6 @@
       "id": 2,
       "description": "Feijão",
       "price": 10
-    },
-    {
-      "id": 3,
-      "description": "Sorvete",
-      "price": 20
-    },
-    {
-      "id": 4,
-      "description": "Catchup",
-      "price": 10.0
     }
   ]
 }

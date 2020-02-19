@@ -2,17 +2,23 @@ var app = angular.module("produtoApp", []);
 
 app.controller("ProdutosController", function($scope, ProdutosService) {
   clear();
-  $scope.produtos = ProdutosService.list();
+  list();
+
+  function list() {
+    $scope.produtos = ProdutosService.list().then(function(resposta) {
+      $scope.produtos = resposta.data;
+    });
+  }
 
   //save
   $scope.save = function(produto) {
-    ProdutosService.save(produto);
+    ProdutosService.save(produto).then(list);
     clear();
   };
 
   //delete
   $scope.delete = function(produto) {
-    ProdutosService.delete(produto);
+    ProdutosService.delete(produto).then(list());
     clear();
   };
 
@@ -29,49 +35,22 @@ app.controller("ProdutosController", function($scope, ProdutosService) {
   }
 });
 
-app.service("ProdutosService", function() {
-  let produtos = [
-    {
-      id: 1,
-      description: "Arroz",
-      price: 2.5
-    },
-    {
-      id: 2,
-      description: "Feijão",
-      price: 10.0
-    },
-    {
-      id: 3,
-      description: "Sorvete",
-      price: 20.0
-    }
-  ];
+app.service("ProdutosService", function($http) {
+  let api = "http://localhost:3000/produtos";
 
   this.list = function() {
-    return produtos;
+    return $http.get(api);
   };
 
   this.save = function(produto) {
-    let findProduct = false;
-    for (let i = 0; i < produtos.length; i++) {
-      if (produtos[i].id === produto.id) {
-        produtos[i].description = produto.description;
-        produtos[i].price = produto.price;
-        findProduct = true;
-        break;
-      }
-    }
-    if (!findProduct) {
-      produtos.push(produto);
+    if (produto.id) {
+      return $http.put(api + "/" + produto.id, produto);
+    } else {
+      return $http.post(api, produto);
     }
   };
 
   this.delete = function(produto) {
-    for (let i = 0; i < produtos.length; i++) {
-      if (produtos[i].id === produto.id) {
-        produtos.splice(i, 1);
-      }
-    }
+    return $http.delete(api + "/" + produto.id);
   };
 });
