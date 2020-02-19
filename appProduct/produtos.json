@@ -16,7 +16,9 @@
       "price": 20
     },
     {
-      "id": 4
+      "id": 4,
+      "description": "Catchup",
+      "price": 10.0
     }
   ]
 }
