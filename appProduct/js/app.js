@@ -18,7 +18,7 @@ app.controller("ProdutosController", function($scope, ProdutosService) {
 
   //delete
   $scope.delete = function(produto) {
-    ProdutosService.delete(produto).then(list());
+    ProdutosService.delete(produto).then(list);
     clear();
   };
 
@@ -36,17 +36,17 @@ app.controller("ProdutosController", function($scope, ProdutosService) {
 });
 
 app.service("ProdutosService", function($http) {
-  let baseUrl = "http://localhost:8085/api/products";
+  let baseUrl = "http://192.168.1.110:8080/appServer/api/products";
 
   this.list = function() {
-    return $http.get(baseUrl);
+    return $http.get(baseUrl + "/list");
   };
 
   this.save = function(produto) {
     if (produto.id) {
       return $http.put(baseUrl + "/" + produto.id, produto);
     } else {
-      return $http.post(baseUrl, produto);
+      return $http.post(baseUrl + "/add", produto);
     }
   };
 
