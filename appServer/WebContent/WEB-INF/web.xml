@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>appServer</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>   
+  </welcome-file-list>
+  
+   <servlet>
+      <servlet-name>Jersey REST Service</servlet-name>
+      <servlet-class>org.glassfish.jersey.servlet.ServletContainer 
+      </servlet-class> <!-- Receber as requisições RestFull -->
+      <init-param>
+         <param-name>jersey.config.server.provider.packages</param-name> <!-- Onde as classes vão ser criadas -->
+         <param-value>com.tef</param-value>
+      </init-param>
+      <init-param>
+         <param-name>com.sun.jersey.api.json.POJOMappingFeature				
+         </param-name> <!-- Faz conversão em Json -> Objeto Java -->
+         <param-value>true</param-value>
+      </init-param>
+      <load-on-startup>1</load-on-startup>
+  </servlet>
+      <servlet-mapping>
+         <servlet-name>Jersey REST Service</servlet-name>
+         <url-pattern>/api/*</url-pattern>	<!-- Todo serviço Rest -->
+      </servlet-mapping>
+</web-app>
