@@ -36,7 +36,7 @@ app.controller("ProdutosController", function($scope, ProdutosService) {
 });
 
 app.service("ProdutosService", function($http) {
-  let baseUrl = "http://localhost:3000/produtos";
+  let baseUrl = "http://localhost:8085/api/products";
 
   this.list = function() {
     return $http.get(baseUrl);
