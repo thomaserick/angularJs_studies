@@ -1,4 +1,4 @@
-var app = angular.module("produtoApp", ["ngRoute"]);
+var app = angular.module("produtoApp", ["ngRoute", "ngResource"]);
 
 //Rotas da aplicação
 app.config(function($routeProvider) {
@@ -25,8 +25,8 @@ app.controller("listController", function($scope, ProdutosService) {
   list();
 
   function list() {
-    $scope.produtos = ProdutosService.list().then(function(resposta) {
-      $scope.produtos = resposta.data;
+    $scope.produtos = ProdutosService.list().then(function(produtos) {
+      $scope.produtos = produtos;
     });
   }
 
@@ -72,26 +72,37 @@ app.controller("InsertController", function(
   }
 });
 
-app.service("ProdutosService", function($http) {
-  let baseUrl = "http://192.168.1.110:8080/appServer/api/products";
+app.service("ProdutosService", function($resource) {
+  let api = $resource(
+    "http://192.168.1.110:8080/appServer/api/products/:id",
+    {},
+    {
+      update: { method: "PUT" },
+      getList: {
+        url: "http://192.168.1.110:8080/appServer/api/products/list",
+        method: "GET",
+        isArray: true
+      }
+    }
+  );
 
   this.findById = function(id) {
-    return $http.get(baseUrl + "/" + id);
+    return api.get({ id: id }).$promise;
   };
 
   this.list = function() {
-    return $http.get(baseUrl + "/list");
+    return api.getList().$promise;
   };
 
   this.save = function(produto) {
     if (produto.id) {
       return $http.put(baseUrl + "/" + produto.id, produto);
     } else {
-      return $http.post(baseUrl + "/add", produto);
+      return api.save(produto).$promise;
     }
   };
 
   this.delete = function(produto) {
-    return $http.delete(baseUrl + "/" + produto.id);
+    return api.delete({ id: produto.id }).$promise;
   };
 });
