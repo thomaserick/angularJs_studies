@@ -10,55 +10,34 @@
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
-<body ng-controller="ProdutosController">
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Produtos
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#!list">Listar</a>
+                        <a class="dropdown-item" href="#!cadProduct">Cadastrar</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
     <div class="container">
-        <div class="col-md-offset-2 col-md-8">
+        <div class="col-md-offset-2 col-md-9">
             <div class="user-content">
-                <h1>Cadastro de Produtos</h1>
-                <form>
-                    <div class="form-group">
-                        <label for="id">Código</label>
-                        <input type="text" name="id" id="" class="form-control" placeholder="Código"
-                            ng-model="produto.id">
-                        <!-- <small id="helpId" class="text-muted">teste</small>  -->
-                    </div>
-
-                    <div class="form-group">
-                        <label for="description">Descrição</label>
-                        <input type="text" name="description" class="form-control" placeholder="Descrição"
-                            ng-model="produto.description" />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="price">Preço</label>
-                        <input type="number" class="form-control" name="price" id="price" placeholder="Preço"
-                            string-to-number ng-model="produto.price">
-                    </div>
-                    <button type="submit" class="btn btn-primary" ng-click="save(produto)">Cadastrar</button>
-                    <button class="btn btn-danger" ng-click="cancel()">Cancelar</button>
-                </form>
-                <hr>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Descrição</th>
-                            <th>Preço</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="produto in produtos track by $index">
-                            <td ng-dblclick="edit(produto)">{{produto.id}}</td>
-                            <td>{{produto.description}}</td>
-                            <td>{{produto.price}}</td>
-                            <td>
-                                <button class="btn btn-danger" ng-click="edit(produto)">Editar</button>
-                                <button class="btn btn-primary" ng-click="delete(produto)">Excluir</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <ng-view></ng-view>
             </div>
         </div>
     </div>
@@ -73,6 +52,7 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src=" lib/angular.min.js"> </script>
+    <script src="lib/angular-route.min.js"></script>
     <script src="js/app.js"></script>
 </body>
 
