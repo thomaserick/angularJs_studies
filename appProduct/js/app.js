@@ -49,8 +49,8 @@ app.controller("InsertController", function(
 ) {
   let id = $routeParams.id;
   if (id) {
-    ProdutosService.findById(id).then(function(response) {
-      $scope.produto = response.data;
+    ProdutosService.findById(id).then(function(produto) {
+      $scope.produto = produto;
     });
   } else {
     clear();
@@ -72,12 +72,39 @@ app.controller("InsertController", function(
   }
 });
 
-app.service("ProdutosService", function($resource) {
-  let api = $resource(
+app.service("ProdutosService", function(ProdutosResources) {
+  this.findById = function(id) {
+    return ProdutosResources.get({ id: id }).$promise;
+  };
+
+  this.list = function() {
+    return ProdutosResources.getList().$promise;
+  };
+
+  this.save = function(produto) {
+    if (produto.id) {
+      return ProdutosResources.update({ id: produto.id }, produto).$promise;
+    } else {
+      return ProdutosResources.save(produto).$promise;
+    }
+  };
+
+  this.delete = function(produto) {
+    return ProdutosResources.delete({ id: produto.id }).$promise;
+  };
+});
+
+app.factory("ProdutosResources", function($resource) {
+  return $resource(
     "http://192.168.1.110:8080/appServer/api/products/:id",
     {},
     {
-      update: { method: "PUT" },
+      update: {
+        method: "PUT",
+        params: {
+          id: "@id"
+        }
+      },
       getList: {
         url: "http://192.168.1.110:8080/appServer/api/products/list",
         method: "GET",
@@ -85,24 +112,4 @@ app.service("ProdutosService", function($resource) {
       }
     }
   );
-
-  this.findById = function(id) {
-    return api.get({ id: id }).$promise;
-  };
-
-  this.list = function() {
-    return api.getList().$promise;
-  };
-
-  this.save = function(produto) {
-    if (produto.id) {
-      return $http.put(baseUrl + "/" + produto.id, produto);
-    } else {
-      return api.save(produto).$promise;
-    }
-  };
-
-  this.delete = function(produto) {
-    return api.delete({ id: produto.id }).$promise;
-  };
 });
