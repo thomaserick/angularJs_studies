@@ -3,19 +3,26 @@
     <div class="form-group">
         <label for="id">Código</label>
         <input type="text" name="id" id="" class="form-control" placeholder="Código" ng-model="produto.id" disabled>
-        <!-- <small id="helpId" class="text-muted">teste</small>  -->
+
     </div>
 
     <div class="form-group">
         <label for="description">Descrição</label>
         <input type="text" name="description" class="form-control" placeholder="Descrição"
-            ng-model="produto.description" required />
+            ng-model="produto.description" minlength="3" required />
+        <small ng-show="FormProdutos.description.$dirty && FormProdutos.description.$error.minlength"
+            id="helpDescription" class="text-danger">O campo
+            descrição precisa ter no mínimo 3 caracteres!</small>
+
     </div>
 
     <div class="form-group">
         <label for="price">Preço</label>
         <input type="number" class="form-control" name="price" id="price" placeholder="Preço" string-to-number
             ng-model="produto.price" required>
+        <small ng-show="FormProdutos.price.$dirty && FormProdutos.price.$error.required" id="helpPrice"
+            class="text-danger">O campo
+            preço é obrigatório!</small>
     </div>
     <button type="submit" class="btn btn-primary" ng-click="save(produto)"
         ng-disabled="FormProdutos.$invalid">Cadastrar</button>

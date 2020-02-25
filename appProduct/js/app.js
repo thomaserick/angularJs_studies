@@ -58,6 +58,7 @@ app.controller("InsertController", function(
 
   $scope.save = function(produto) {
     clear();
+    $scope.FormProdutos.$setPristine();
     ProdutosService.save(produto).then(redirectList);
   };
 
@@ -96,7 +97,7 @@ app.service("ProdutosService", function(ProdutosResources) {
 
 app.factory("ProdutosResources", function($resource) {
   return $resource(
-    "http://192.168.1.110:8080/appServer/api/products/:id",
+    "http://localhost:8085/appServer/api/products/:id",
     {},
     {
       update: {
@@ -106,7 +107,7 @@ app.factory("ProdutosResources", function($resource) {
         }
       },
       getList: {
-        url: "http://192.168.1.110:8080/appServer/api/products/list",
+        url: "http://localhost:8085/appServer/api/products/list",
         method: "GET",
         isArray: true
       }
