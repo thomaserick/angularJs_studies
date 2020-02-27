@@ -1,3 +1,9 @@
+<div class="input-group">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-default">Pesquisar</span>
+    </div>
+    <input type="text" class="form-control" ng-model="search">
+</div>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -7,10 +13,10 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="produto in produtos track by $index">
+        <tr ng-repeat="produto in produtos | filter:{description:search} track by $index">
             <td ng-dblclick="edit(produto)">{{produto.id}}</td>
-            <td>{{produto.description}}</td>
-            <td>{{produto.price}}</td>
+            <td>{{produto.description | uppercase}}</td>
+            <td>{{produto.price | currency: 'R$ '}}</td>
             <td>
                 <a href="#!cadProduct/{{produto.id}}" class="btn btn-danger" role="button">Editar</a>
                 <button class="btn btn-primary" ng-click="delete(produto)">Excluir</button>

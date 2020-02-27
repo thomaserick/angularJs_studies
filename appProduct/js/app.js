@@ -57,9 +57,9 @@ app.controller("InsertController", function(
   }
 
   $scope.save = function(produto) {
-    clear();
-    $scope.FormProdutos.$setPristine();
-    ProdutosService.save(produto).then(redirectList);
+    ProdutosService.save(produto).then(redirectList, function(erros) {
+      $scope.errors = erros.data.message;
+    });
   };
 
   $scope.cancel = redirectList;
@@ -70,6 +70,7 @@ app.controller("InsertController", function(
 
   function redirectList() {
     $location.path("/list");
+    //$scope.FormProdutos.$setPristine();
   }
 });
 
@@ -110,6 +111,11 @@ app.factory("ProdutosResources", function($resource) {
         url: "http://localhost:8085/appServer/api/products/list",
         method: "GET",
         isArray: true
+      },
+
+      save: {
+        url: "http://localhost:8085/appServer/api/products/add",
+        method: "POST"
       }
     }
   );
