@@ -15,6 +15,10 @@ app.config(function($routeProvider) {
       templateUrl: "views/products/list.html",
       controller: "listController"
     })
+    .when("/movement/:id", {
+      templateUrl: "views/products/movement.html",
+      controller: "InsertController"
+    })
     //Rota default
     .otherwise({
       redirectTo: "/list"
@@ -72,6 +76,29 @@ app.controller("InsertController", function(
     $location.path("/list");
     //$scope.FormProdutos.$setPristine();
   }
+
+  $scope.saveMovementProduct = function(produto, movementProducts) {
+    ProdutosService.saveMovementProduct(produto, movementProducts).then(
+      function(produto) {
+        reloadMovement(produto);
+      }
+    );
+  };
+
+  $scope.deleteMovementProduct = function(idProduto, movementProducts) {
+    ProdutosService.deleteMovementProduct(idProduto, movementProducts).then(
+      function(produto) {
+        console.log(produto);
+        $scope.produto = produto;
+      }
+    );
+  };
+
+  function reloadMovement(produto) {
+    $scope.produto = produto;
+    $scope.movementProducts = {};
+    $scope.FormMovimentProduct.$setPristine();
+  }
 });
 
 app.service("ProdutosService", function(ProdutosResources) {
@@ -94,11 +121,25 @@ app.service("ProdutosService", function(ProdutosResources) {
   this.delete = function(produto) {
     return ProdutosResources.delete({ id: produto.id }).$promise;
   };
+
+  this.deleteMovementProduct = function(idProduto, movementProducts) {
+    return ProdutosResources.deleteMovementProduct(
+      { id: idProduto },
+      { idMovement: movementProducts.id }
+    ).$promise;
+  };
+  this.saveMovementProduct = function(produto, movementProducts) {
+    return ProdutosResources.saveMovementProduct(
+      { id: produto.id },
+      movementProducts
+    ).$promise;
+  };
 });
 
 app.factory("ProdutosResources", function($resource) {
+  var baseUrl = "http://localhost:8085/appServer/api/products/";
   return $resource(
-    "http://localhost:8085/appServer/api/products/:id",
+    baseUrl + ":id",
     {},
     {
       update: {
@@ -108,14 +149,29 @@ app.factory("ProdutosResources", function($resource) {
         }
       },
       getList: {
-        url: "http://localhost:8085/appServer/api/products/list",
         method: "GET",
+        url: baseUrl + "list",
         isArray: true
       },
 
       save: {
-        url: "http://localhost:8085/appServer/api/products/add",
-        method: "POST"
+        method: "POST",
+        url: baseUrl + "add"
+      },
+      saveMovementProduct: {
+        method: "POST",
+        url: baseUrl + ":id/movement",
+        params: {
+          id: "@id"
+        }
+      },
+      deleteMovementProduct: {
+        method: "DELETE",
+        url: baseUrl + ":id/movement/:idMovement",
+        params: {
+          id: "@id",
+          idMovement: "@idMovement"
+        }
       }
     }
   );

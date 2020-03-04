@@ -1,0 +1,59 @@
+<div class="moviment">
+    <div align="center">
+        <h1>Movimentação</h1>
+    </div>
+    <form name="FormMovimentProduct">
+
+        <div class="form-group">
+            <label for="produto">Produto</label>
+            <input type=" text" class="form-control col-5" id="product" ng-model="produto.description" disabled>
+        </div>
+
+        <div class="form-group">
+            <label for="type">Tipo</label>
+            <select id="type" class="browser-default custom-select" ng-model="movementProducts.type">
+                <option value="ENTRADA">Entrada</option>
+                <option value="SAIDA">Saida</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantidade</label>
+            <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Quantidade"
+                string-to-number ng-model="movementProducts.quantity" min="0" required>
+            <small ng-show="FormMovimentProduct.quantity.$dirty && FormMovimentProduct.quantity.$error.required"
+                id="helpQuantity" class="text-danger">O campo
+                preço é obrigatório!</small>
+            <div class="form-group">
+                <small class="text-danger">
+                    {{errors}}
+                </small>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" ng-click="saveMovementProduct(produto,movementProducts)"
+            ng-disabled="FormMovimentProduct.$invalid">Cadastrar</button>
+        <button class="btn btn-danger" ng-click="cancel()">Cancelar</button>
+    </form>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Data/Hora</th>
+            <th>Tipo</th>
+            <th>Quantidade</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="moviment in produto.movementProducts track by $index">
+            <td>{{moviment.dateTime | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+            <td>{{moviment.type}}</td>
+            <td>{{moviment.quantity}}</td>
+            <td>
+                <button class="btn btn-primary" ng-click="deleteMovementProduct(produto.id,moviment)">Excluir</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
